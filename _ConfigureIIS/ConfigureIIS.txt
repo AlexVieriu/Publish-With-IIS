@@ -1,0 +1,40 @@
+Links that helped me to config:
+https://stackoverflow.com/questions/30319219/how-to-deploy-a-single-solution-with-multiple-projects
+https://stackoverflow.com/questions/2575907/cannot-open-database-test-requested-by-the-login-the-login-failed-login-fail
+https://docs.microsoft.com/en-us/aspnet/web-forms/overview/deployment/visual-studio-web-deployment/deploying-to-iis
+https://docs.microsoft.com/en-us/dotnet/core/additional-tools/self-signed-certificates-guide
+https://docs.microsoft.com/en-us/visualstudio/deployment/deploying-applications-services-and-components-resources?view=vs-2022
+
+
+Tutorial: https://www.youtube.com/watch?v=il4CPRKOTuQ&ab_channel=IAmTimCorey
+
+1. Open IIS Manager
+2. Install ASP.NET Core Runtime Hosting Bundle forWindows: https://dotnet.microsoft.com/en-us/download/dotnet/6.0
+3. Create a Application Pools
+-> .Net CLR Version : No Managed Code(for .net5 > projects)
+4. Generate Certificate
+https://docs.microsoft.com/en-us/dotnet/core/additional-tools/self-signed-certificates-guide#create-a-self-signed-certificate
+-> Create a self-signed certificate(scroll down)
+(delete certificates : https://support.hdeone.com/hc/en-us/articles/360014871753-How-to-delete-installed-Device-Certificates-Windows-10-)
+5. Install the certificate
+ex:C:\Users\alexandru.vieriu\.aspnet\https
+-> double click the certificate(BlazorApp2.pfx)
+-> Local Machine -> C:\Users\alexandru.vieriu\.aspnet\https\BlazorApp2.pfx (click Next)
+-> Password: crypticpassword ( the one that is in the documentation) (click Next)
+-> click Finish
+6. IIS Manager
+-> Sites -> Add Website:
+Site name       : Test2
+Application pool: TestingAlex_App2(created at 3.)
+Physical path   : C:\Users\alexandru.vieriu\Downloads\Project(where the application will be publish)
+Type            : https
+SSL certificate : ASP.Net Cote HTTP development certificate(created at 4.)
+7. Test2
+BlazorClient app route: C:\Users\alexandru.vieriu\Downloads\Project\wwwroot
+BlazorServer app route: C:\Users\alexandru.vieriu\Downloads\Project
+For BlazorClient app:
+-> MIME Types -> Add extentions : 
+File name extetion  : .dat 
+MIME type           : application/octet-stream
+File name extetion  : .blat 
+MIME type           : application/octet-stream

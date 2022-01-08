@@ -1,0 +1,26 @@
+﻿@page "/api"
+@using BlazerServerWithDataBase.Data
+@using BlazerServerWithDataBase.Models
+
+@inject IDbRepository repo;
+
+<h5>Ce faci BOBITZAAAAAAAAA</h5>
+
+@if (Users != null)
+{
+    @foreach (var user in Users)
+    {
+        <ul>
+            <li>@user.FirstName</li>
+        </ul>
+    }
+}
+
+
+@code {
+    private List<UserUI> Users;
+    protected override async Task OnInitializedAsync()
+    {
+        Users = await repo.GetUsers();
+    }
+}
